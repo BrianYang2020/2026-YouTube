@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChatGPT 影片剪輯工作流"
+  short_description: "在 ChatGPT App 完成剪輯、字幕、封面與上架素材"
+  default_prompt: "Use $chatgpt-youtube-video-workflow to turn a source video into a reviewed YouTube publishing package."

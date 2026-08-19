@@ -1,0 +1,19 @@
+好,在這邊的話,你必須要去打開一個功能叫做Remote Control,所以在你的Claude Code桌面版裡面,我們找到這個Setting。
+
+那Setting裡面有一個功能要先打開,算是早很久。
+
+在這裡,在Claude Code裡面,這個功能要把它打開。
+
+這個功能就是Enable Remote Control byDefault。
+
+這個要把它打開,它就會把這個功能打開。
+
+但功能打開,你最終還是要按說要不要去把這個Session的Remote Control打開。
+
+它這個功能打開跟Remote Control打開就是兩層,它有兩層。
+
+所以首先你必須要先把這個功能開,Remote Control,就是我們一開始預設就是在每一個Session就會開啟這個Remote Control的功能。
+
+那你開啟之後,你再決定說要不要把這個Session,就是真正做Remote Control,所以要去開啟功能。
+
+那我覺得這個是Claude Code裡面很方便的。

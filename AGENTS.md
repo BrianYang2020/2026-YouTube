@@ -27,7 +27,8 @@
 
 | Skill | 路徑 | 用途 |
 |-------|------|------|
-| Codex 總控工作流 | `skills/codex-youtube-video-workflow/SKILL.md` | Codex 專用，串接剪片、字幕、標題、內建 Image2 封面、metadata、打包 |
+| ChatGPT App 總控工作流 | `skills/chatgpt-youtube-video-workflow/SKILL.md` | **優先用於本專案後續 ChatGPT App 剪輯**；單一資料夾自帶長片、字幕與短片腳本，可獨立分享；輸出後綴 `[ChatGPT]` |
+| Codex 總控工作流 | `skills/codex-youtube-video-workflow/SKILL.md` | Codex CLI 舊版，串接剪片、字幕、標題、內建 Image2 封面、metadata、打包 |
 | 智能剪口播 | `skills/smart-cut/SKILL.md` | auto-editor 去靜音 |
 | 語音轉字幕 | `skills/audio-to-srt/SKILL.md` | 音訊 → SRT（先剪片再轉字幕，時間碼才對齊） |
 | 封面圖生成 | （見下方備註）| **使用你內建的 image 2 生圖工具**，不要呼叫 `skills/cover-image/draw.py`（那是給 Claude Code 用的）|
@@ -43,6 +44,10 @@ Codex 總控 Skill 另有備份副本：`skills-backup/codex-youtube-video-workf
 - prompt 依 `assets/style/cover-style.md` 風格指南撰寫
 - 主色依影片主角決定（Claude=橘 / Codex=藍 / 兩者並用=橘+藍）
 - 輸出存到 `output/<標題>/cover.png`
+
+## ChatGPT App 後續剪輯入口
+
+在 ChatGPT App 處理新影片時，先讀 `skills/chatgpt-youtube-video-workflow/SKILL.md`，使用其中自帶的 `scripts/`，不要再跨接 Claude 或 Codex 舊版總控。ChatGPT App 封面走內建生圖，不需 OpenAI API key；Groq key 只從環境變數或使用者家目錄讀取。輸出資料夾固定加 `[ChatGPT]`。
 
 ## 標準工作流
 1. `raw/<影片代號>/原始.mp4` 進來

@@ -56,6 +56,12 @@
 
 ## 封面規範（兩條線必讀）
 
+### 0. 【最優先】頻道封面慣例 → 先查 yt-pack
+**頻道實際上架封面的真相在 `G:\我的雲端硬碟\2026第二大腦\yt-pack\<episode>\`**（由全域 `yt-pack` 技能產出，一集一資料夾）。
+- **剪某一集前，先去 yt-pack 找這一集有沒有現成封面**：有就**直接沿用**（複製成 `output/<標題>/cover.png`），沒有才自己生。
+- 生封面時**以 yt-pack 慣例為第一優先**：**純黑底＋三師爸真人去背照（右側）＋左側超大粗體主標＋左上系列標籤＋右上 FREE/徽章＋右下標籤帶＋手捧發光終端機/產品 mockup**；強調色依主題（**Claude=橘/黃、Codex=藍、OpenCode/多模型=綠 CLI 風**），維持「黑底＋單一強調色」。
+- 完整慣例見 `assets/style/yt-pack-cover-convention.md`。舊的 `cover-style.md`（深藍＋橘粒子）已被取代，只當色票參考。
+
 ### 1. 人物基準照
 **所有 YouTube 封面必須使用 `assets/persona/三師爸人物形象照.png` 作為人物基準。**
 呼叫 `cover-image` Skill 時帶 `--edit assets/persona/三師爸人物形象照.png` 參數。

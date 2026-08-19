@@ -6,9 +6,267 @@
 ---
 
 ## 目前狀態（最新）
-- **更新時間**：2026-07-12（深夜）
-- **最後操作者**：Claude Code（Fable 5）
-- **進度**：**AI Agent 基本功 EP05（三層一次講清楚：技能/全域/專案）長片＋3 指定短片全流程交付完成** ✅
+- **更新時間**：2026-08-16
+- **最後操作者**：Claude Code（Opus 5）
+- **進度**：**「Agent Skill 完全攻略」長片＋3 支指定主題短片全流程交付完成** ✅（使用者：字幕你全權決定、短片指定三個主題、一次做到好 → 全自動無 STOP）
+  - 來源：Downloads `Agent Skill 完全攻略.mp4`（67:34 / 2.35GB / 1080p；**又是 VFR 漏判型** `avg=182436000/6081199≈30.0000049` ≠ `r=30/1` → 手動先轉真 CFR）→ 歸檔 `raw/agent-skill/原始.mp4`
+  - smart-cut `0.04 / 0.25sec,0.25sec` → **67:34 → 24:10（剪 64.2%）**
+    - ⚠️ **剪幅異常高，我有先驗證再往下走**：silencedetect 在 -30/-35/-40dB 都抓不到靜音（背景噪聲底高），無法用來判斷；改用**語速密度**驗證——轉錄後 5022 詞 / 24:10 ＝ **208 詞/分**，與前幾集（195–202 詞/分）相當，且逐字稿句子完整、語意連貫 → 判定原片本來就有大量 demo 等待的空白，**不是剪過頭**
+    - 亮度抽樣 5 點 105–204（1100s 那點 105 是深色 IDE 畫面，非黑幀）
+  - 字幕：Groq 5022 詞 / 156 段 → resegment 451 段 → apply_vocab 3 段 → **Claude 自行清字**（`working/askill/clean_subs.py`：全域 46 段＋段落覆寫 10 段，合計 56 段）→ validate 通過（451 段 / 24:09，時間碼零改動）
+  - **本集詞彙更正重點（Agent Skill／Gems 主題沿用）**：
+    - **⭐ Gem 被整批聽成「券」**（升級你的券／Skill 比券強大／把好幾個券合併…）→ 全部還原成 Gem。**這是新的一類錯字：中文同音字取代英文詞，日後看到突兀的中文名詞要回頭想是不是英文**
+    - **AntiGravity**（Antigrality／Antegrality／Anti-Gravity／Antigravity）、**ChatGPT**（CheretGPT）、**Cloudflare**（Claude Flare，**又中一次，Claude 頻道特別容易誤判**）
+    - **Padlet**（小寫 padlet 統一大寫）、**PadletAutoBoard**（Padlet AutoBoard）、**Gem2Skill**（Gen2Skill）、**Gems**（Jems）
+    - **English Error Cipher**（English Aero Seifer，升級後產生的技能名）
+    - **首字母**（手字母）、**生圖**（生徒）、**闖關題卡**（闖關提卡）、**提示詞備份**（提示史／提示時備份）、**備用區段**（備用版）、**Submit**（Sub it）、**repo**（report）、**畫面上就會出現**（因為上就會出現）、**停止支援**（停止資源）、**原生支援生成圖片**（原生、資源、生成圖片）
+  - 長片標題 Claude 自訂：「**Agent Skill 完全攻略：Gems 不是被淘汰，是該升級成 Skill**」
+  - 長片交付：`output/Agent Skill 完全攻略 Gems 不是被淘汰，是該升級成 Skill [Claude]/`（5 檔）
+  - **封面自己生（yt-pack 無此集）**：參考 `yt-pack/live-skills-are-yours` 的「手捧發光 SKILL 六邊形」構圖，改成**黑底＋碎裂冷藍 `#4A9EFF` 的 GEM 菱形 → 金黃 `#FFC93C` 的 SKILL 六邊形**升級隱喻。四張封面文字全對、人物延續基準照
+  - **短片 3 支（主題由使用者指定，標題與時間碼我定）**，各 7 檔含 9:16 直式：
+    - ①「免費用戶也能備份 Gems｜Google 官方匯出三分鐘搞定」（93.2s；`00:03:14.280-03:32.420, 00:03:41.860-04:34.880, 00:05:14.720-05:33.700`）
+    - ②「一個網址，把你所有的 Gems 升級成 Skill」（70.4s；`00:06:43.632-07:39.752, 00:08:31.252-08:42.472`）
+    - ③「一句提示詞，AI 自動生出一整面教學 Padlet」（77.8s；`00:17:16.824-18:02.044, 00:19:21.056-19:42.936, 00:19:49.536-19:57.176`）
+    - **⚠️ 這三支都超過 60 秒（70–93s），不會自動進 Shorts feed**，屬一般短影片。因為是使用者指定的教學型主題，**完整度優先於 Shorts 演算法**（前幾集自選主題時都刻意壓在 60 秒內，這次是刻意的取捨，已寫進各支 metadata）
+  - **✅ ffmpeg 環境續佳**：字卡／燒字幕／直式三支全部一次過；三支切點都不需要修殘字（少見）
+  - 內容重點（供日後剪同系列參考）：**Skill ＝ 一份寫給 Agent 看的使用說明書**（內容/流程/資源/輸出/觸發情境），會重複做的流程都能變技能。**Gems 停用傳聞**：系統訊息稱 Google 計畫 10/20 停止支援現有 Gems，尚無正式新聞稿；講者立場「不是淘汰，是升級」。**備份三條路**：①免費用戶直接問 Gemini ②**Google Takeout**（取消全選→只勾 Gemini→多種格式 HTML→新增至雲端硬碟→僅匯出一次→Zip；解壓後 `Gemini Gems Data` HTML 內含名稱/說明/系統提示詞/附加檔案）③付費用戶叫 **Spark** 打包。**升級流程**：把 `Gem2Skill` repo 網址貼給任何 Agent → 掃雲端硬碟列出 Gems → 選編號 → Agent 給能力加值選單 A/B/C → 打包成技能（**前提：先裝 Google 雲端硬碟電腦版**；本集用 Gemini 3.7 Flash 在 AntiGravity 跑）。實測把「偵錯密碼（英文）」升級成 `English Error Cipher`，產出五題合一的互動闖關 HTML，用 **Cloudflare** 免費發布。**要生圖的技能只能在原生支援生圖的 Agent（AntiGravity／ChatGPT）跑**。**技能怎麼叫**：打斜線（**裝完要重開 Agent**）或直接說需求；設定→客製化可看所有技能與 MCP（講者已裝 17 個技能＋Padlet MCP）。**分享**＝做成公開 GitHub repo，一個網址走遍所有 Agent。**PadletAutoBoard**：給主題或教材，自動上網找資料建整面 Padlet，**前三區段固定（參考資料/投票/留言板）＋依內容決定主題區段數＋最後留五個備用區段**，完成直接給 QR Code——這一連串正是 Gem 做不到的（連不到工具、不會上網）
+  - 上架提醒：**說明欄要補四樣**——① `Gem2Skill` GitHub repo ② 英文偵錯密碼技能 repo ③ 五合一互動闖關網頁公開網址（Cloudflare）④ AntiGravity 基本功 EP04（兩個月前那集）；短片②的留言區也要放 `Gem2Skill` repo
+- **下一步**：補齊上述四個連結即可上架；本集字幕無待確認詞
+
+## 上一個狀態（2026-08-12，OpenCode EP07）
+- **更新時間**：2026-08-12
+- **最後操作者**：Claude Code（Opus 5）
+- **進度**：**OpenCode 基本功 EP07（新版本完全體·最佳搭配設定）長片＋3 短片全流程交付完成** ✅（使用者：字幕你確認、三支短片都要剪、一次做到好 → 全自動無 STOP）
+  - 來源：Downloads `Opencode 基本功EP07_新版本完全體_最佳搭配設定.mp4`（50:25 / 1.75GB / 1080p；**又是 VFR 漏判型** `avg=272286000/9076201≈29.9999967` ≠ `r=30/1` → 手動先轉真 CFR）→ 歸檔 `raw/opencode-ep07/原始.mp4`
+  - smart-cut `0.04 / 0.25sec,0.25sec` → **50:25 → 41:05（剪 18.5%）**（本集講話密集，剪幅本來就低）；亮度抽樣 6 點 162–176，無黑幀
+  - 字幕：Groq 7996 詞 / 422 段 → resegment 701 段 → apply_vocab 5 段 → **Claude 自行清字**（`working/oc07/clean_subs.py`：全域 130 段＋段落覆寫 21 段，合計 140 段）→ validate 通過（701 段 / 41:04，時間碼零改動）
+  - **本集詞彙更正重點（OpenCode／模型系列沿用）**：
+    - **DeepSeek**（本集被聽成 14 種：DeepSek／DeepSec／DeepSeg／DeepSig／DeepSick／DeepSeed／DeepSeket／DeepSeker／DeepSecret／DeepSecure／Deep Seek… 已用單一 alternation 規則、長變體排前面處理）
+    - **Luna**（LUNA）、**SOL**（Sol）、**Opus**（Arbus／Apus／Ops）、**Sonnet**（SongLuna → Sonnet,Luna）
+    - **⚠️ Groq 不是 Grok**：本集講的是**免費 API provider Groq**（片中「搜尋 GRO Q API Key」），全部統一成 Groq。**沿用 EP06 教訓：xAI 的 Grok 與 Groq 是兩回事，要看語境判斷**
+    - **Go 方案**（購方案／GO 方案／Code方案）、**OpenCode Zen**（OpenCodexAM）、**Big Pickle**（BigPicco）、**MiMo V2.5**（Memo／MIMO）、**Nano Banana**（NanoBatana）
+    - **智力分數**（自立的分數／字立分數／致力分數／換字力）、**生圖**（深圖／生徒）、**教師研習**（教師演習／教室演習）、**陸版**（路版／路板）、**折抵**（折底）、**平價版無敵**（評價版無底）、**生成式 AI**（深層式AI）、**鋼琴**（康廷）、**省得驗證答案**（聖代驗證答案）
+    - **幾何題的 D 點**：Whisper 把 `D` 全部聽成「珠」（A珠／珠AC／A珠C…），已整批還原成 D
+    - **段 78 是整段只有一個「D」的 8.5 秒空段**，與段 79 合起來才是 DeepSeek → 用段落覆寫拆成「DeepSeek」+「V4 Flash 新版本的」
+    - **⚠️ 跨段坑（連兩集都中）**：DeepSeek 被切在段 519／520 變成 `DeepS` + `eek`，已用段落覆寫收回。**Agent／DeepSeek 這類長英文詞的全域替換，事後一定要掃「段尾英文字母＋下段開頭英文字母」**
+  - **❓待使用者確認（3 處，已用最合理版本寫入，也記在 metadata.md §8）**：
+    1. **思考強度層級**：片中同時講「Altra／ATRA High」與「X-High」，字幕**統一寫 X-High**；若 OpenCode UI 實際是 Ultra High 要整批改回
+    2. **免費看圖技能名**：Whisper 聽成 `Image Vision Sider`、repo 名聽成 `Psyca`，依原音保留未動
+    3. **Kimi 2.6**：片中「以前沒有 Luna 時用 Kimi 2.6」，未查證是否為 Kimi K2.6
+  - 長片標題 Claude 自訂：「**OpenCode 基本功 EP07：新版本完全體，DeepSeek V4 Flash ＋ Luna 最佳搭配**」
+  - 長片交付：`output/OpenCode 基本功 EP07 新版本完全體，DeepSeek V4 Flash ＋ Luna 最佳搭配 [Claude]/`（5 檔）
+  - **封面自己生（yt-pack 無 EP07）**：**刻意複製 EP06 的 OpenCode 系列版型**（黑底＋白色超大 OpenCode ＋灰色集數＋螢光綠 `#35D94B` ＋模型卡片＋終端機視窗＋右下白色標籤帶＋右上白圓徽章），四張封面文字全對、人物延續基準照
+  - **短片 3 支全做**（主題與標題我自選，各 7 檔含 9:16 直式；**三支都 < 60 秒 → 可進 Shorts feed**）：
+    - A 承諾型「用時間換智力｜便宜模型想久一點就能追上頂級」（58.6s；`00:11:51.194-12:24.414, 00:14:47.520-15:09.874`）
+    - B 痛點型「免費幫 DeepSeek 裝眼睛，連會考題的圖都讀得懂」（49.5s；`00:10:23.274-10:31.194, 00:17:45.834-18:13.894, 00:22:25.430-22:35.908`）
+    - C 好奇型「別再說 OpenCode 弱｜同一個對話想換哪家模型都可以」（58.5s；`00:34:01.642-34:26.042, 00:34:29.162-34:43.042, 00:34:47.022-35:04.242`）
+    - **切片小坑**：A、B 的第二／三幕開頭各殘留前一段的尾字（「上」「度」），起點各往後推 0.3 秒並修字幕文字才乾淨。**日後選切點要順手看一下該段第一個字是不是上一句的殘尾**
+    - 短片 C 第一版封面標籤帶出現重複逗號「,，」，重生一版（prompt 明講「標籤帶內不要出現任何標點」）才乾淨
+  - **✅ ffmpeg 環境續佳**：字卡／燒字幕／直式三支全部一次過
+  - 內容重點（供日後剪同系列參考）：**舊版 OpenCode 不會自動升級，要重新到官網下載**。Go 方案每月 10 美金換 60 美金用量（週 30／五小時滾動）。新增兩個模型：**DeepSeek V4 Flash 重新訓練版（0731）**——純文字、看不到圖、100 萬上下文、一次呼叫約 0.0006–0.003 美金，需開「啟用部署在中國的模型」開關、走陸版伺服器；**GPT 5.6 Luna**——視覺模型、可讀圖片與 PDF、100 萬上下文、一次約 0.01–0.02 美金。兩者都標 **2X Usage ＝雙倍消耗**（各約 30 美金額度，**沿用 EP06 判讀**）。核心觀念 **「用時間換智力」**：思考強度開 Max 時兩者智力分數都 52，X-High 49、High 46；對照 Opus 5 為 60–61、Opus 4.8 Max 57、GPT 5.6 SOL Max 58–59，SOL 與 Luna 成本差 30 倍。兩個免費技能：Groq 免費 API 幫 DeepSeek 裝眼睛（實測讀 114 年會考數學第 5 題幾何圖形全對）、免費生圖再壓繁體中文（**認 IP，教師研習整間教室同一 Wi-Fi 會被擋**）。講者自己是接 OpenAI Image 2（一張約 0.3 元）。破除誤會：**OpenCode 能在同一對話切換各家模型、也能接本地模型**，Codex 只能用 GPT、Claude Code 只能用 Claude。順帶提到 MiMo V2.5 幾乎免費且有視覺、Kimi K3 太貴、預告可能出 Hermes 教學、基本功系列將轉教學應用
+  - 上架提醒：**說明欄要補三個連結**——① OpenCode 邀請碼／優惠碼（雙方各得 5 美金折抵）② 免費看圖技能 GitHub repo ③ 免費生圖技能 GitHub repo；短片 B 留言區也要放看圖技能 repo
+- **下一步**：使用者確認上述 3 處存疑詞後回改字幕；補齊三個連結即可上架
+
+## 上一個狀態（2026-08-09，Google Spark ＋ GAS）
+- **更新時間**：2026-08-09
+- **最後操作者**：Claude Code（Opus 5）
+- **進度**：**AI Agent 教學應用「Google Spark ＋ GAS」長片＋3 短片全流程交付完成** ✅（使用者：字幕你決定、三支短片你決定、全部一次做到好 → 全自動無 STOP）
+  - 來源：Downloads `Google Spark_ GAS 教學神搭配.mp4`（60:07 / 2.09GB / 1080p；**VFR 漏判型**：`avg=324699000/10823299≈30.0000027` ≠ `r=30/1`，同 EP04／EP07 那種「差一點就是 30」→ **手動先轉真 CFR** 再剪）→ 歸檔 `raw/google-spark-gas/原始.mp4`
+  - smart-cut `threshold 0.04 / margin 0.25sec,0.25sec`（輸出 C:\temp 再搬回）→ **60:07 → 40:38（剪 32.4%）**；亮度抽樣 6 點 190–203，全程無黑幀（CFR 轉檔有效）
+  - 字幕：Groq 8185 詞 / 273 段 → resegment 813 段（孤兒 0）→ apply_vocab 9 段 → **Claude 自行清字**（自寫大小寫敏感腳本 `working/gspark/clean_subs.py`：全域規則 110 段＋段落覆寫 83 段，合計 163 段）→ validate 通過（813 段 / 40:35，時間碼零改動）→ 未刪段
+  - **本集詞彙更正重點（Google Spark／GAS 系列沿用）**：
+    - **GAS**（GaS／CaS／GoS／Gs／GS → GAS）、**Google Apps Script**（Google App Scripts）
+    - **clasp**（CLSP／CoASP／Clasp → clasp，Apps Script 的 CLI 工具）
+    - **AI Agent**（AIAGEN／AGEN／Aging／agin／A群／A君／小寫 agent → Agent）
+    - **AntiGravity**（Antigrity／Antiquity／Antigrate／Antigrating／Antigratis／Anti-Gratis，**含拼對但大小寫錯的 Antigravity**）
+    - **Google Sheet**（Google Sites／Google Ship／四傳表 → Google Sheet／試算表）、**Google Slide**（Google Slead）
+    - **NotebookLM**（Notebook M）、**Google Workspace**（work specs）、**Gem**（GEM，Gemini 的自訂 Gem）、**Gemini**（Geminar）、**Typeless**（Tyblest）、**SOL／Luna**（ChatGPT App 模型名）
+    - **排程**（排成／排行）、**輪詢**（輪巡／輪循）、**行事曆**（行司力／行事力／行事例）、**雲端硬碟**（雲端硬點／雲噸硬碟／雲端一點）、**電腦版**（電腦板）、**登入**（登錄）、**寄信／寄 Mail**（記信／記Mail）、**垃圾信**（垃圾心）、**把關**（打官）、**串接**（創接）、**子資料夾**（紙資料夾）、**堪用**（勘用）、**三思**（刪失）、**delay**（屌勒）、**凱西老師**（凱希）
+    - 段 564–566 的 `G1號／G3號…` → **9月1號／9月3號…**（Whisper 把「九」聽成 G）
+    - **⚠️ 跨段坑再現**：`A群` 被切在段 365／366，全域替換後變成 `Age` + `nt`，已用段落覆寫收回。**日後 Agent 類替換一律回頭掃「段尾是英文字母、下段開頭也是英文字母」的組合。**
+  - **❓待使用者確認（3 處，我已用最合理版本先寫入）**：
+    1. 段 626「會整美是Agent」→ 暫寫「**彙整每日 AI Agent**」（推測是他念出第二個排程的名稱）
+    2. 段 219「公開時」→ 暫寫「**工作區**」
+    3. 段 269 的資料夾名 `Pretest`／`RDQ` 依原音保留，未查證實際拼法
+  - 長片標題 Claude 自訂：「**AI Agent 教學應用：Google Spark ＋ GAS，教師自動化的雲端神搭配**」
+  - 長片交付：`output/AI Agent 教學應用 Google Spark ＋ GAS，教師自動化的雲端神搭配 [Claude]/`（5 檔）
+  - **封面本集自己生（yt-pack 無現成）**：依 yt-pack 慣例 draw.py 生 **黑底＋電光青綠 `#14E0C8`**（AI Agent 教學應用系列色），長片為雲朵→試算表／日曆／信封／雲端硬碟四節點＋GAS 程式碼終端機。四張封面文字全部正確、人物延續基準照
+  - **短片 3 支全做**（主題與標題我自選，各 **7 檔**含 9:16 直式；**三支都 < 60 秒 → 可進 Shorts feed**）：
+    - A 對比型「電腦關機也能工作｜Google Spark 是住在雲端的 AI Agent」（37.6s；`00:19:01.880-19:11.513, 00:19:18.913-19:27.073, 00:19:51.713-20:08.553`）
+    - B 好奇型「每天早上七點，AI 自動幫我整理好行事曆跟 Gmail」（56.8s；`00:28:35.226-29:00.166, 00:29:12.066-29:40.946`）
+    - C 痛點型「寫 GAS 不用再複製貼上｜clasp 讓 AI 直接改你的程式」（45.9s；`00:32:31.239-32:58.719, 00:34:59.259-35:14.659`）
+  - **✅ ffmpeg 環境續佳**：`add_end_card.py`（drawtext）、`burn_subtitles.py`（中文燒字幕）、`make_vertical.py`（1080×1920）三支全部一次過，抽幀驗證字幕與「詳細影片請看留言」字卡正常。EP06/EP14 那套 PIL 繞道仍不需要
+  - 內容重點（供日後剪同系列參考）：Google Spark ＝ Gemini 側邊欄切換、需 **Google Pro**、目前 Beta 且天天在改。前置要在「個人化智慧服務」把 Google 生態系連起來（＝雲端資料幾乎沒有隱私，講者有明確提醒）＋裝雲端硬碟電腦版。**Gem 做聊天機器人、Spark 做排程與處理檔案，兩兄弟互補不重合**。能做：讀寫雲端硬碟、搬檔整理、上網搜尋（比 Gemini Deep Research 淺）、生成原生 Document／Slide／Sheet、串 Gmail 與 Calendar、**排程與輪詢（最短一小時，不支援 30 秒）**、Google Chat。不能做：寫 GAS、連 NotebookLM、碰本地檔案、改／生成 Office 三件套（能讀不能改）；一個對話＝一個工作，沒有專案概念。**搭配法**：本地 Agent（本集示範 AntiGravity）＋ **clasp** 直接寫進 Apps Script，省掉複製貼上；授權與部署仍須手動。學生作答存 Google Sheet → Spark 定時輪詢處理。翻車實況：AntiGravity 授權後噴 Type Error，講者刻意保留並直言穩定度輸 Claude Code 與 Codex
+  - 上架提醒：**說明欄務必補 clasp 連接 GAS 的 GitHub repo 連結**（片中承諾「根據我提供的 repo 來連接你的 GAS」）；短片 C 留言區也要放同一個連結；三支短片留言置頂長片連結
+- **下一步**：使用者確認上述 3 處存疑字幕後回改（長片 srt/txt 與短片皆需同步）；補齊 repo 連結後即可上架
+
+## 上一個狀態（2026-08-02，Wordwall）
+- **更新時間**：2026-08-02
+- **最後操作者**：Claude Code（Opus 5）
+- **進度**：**開新系列「AI Agent 教學應用」**，首集封面＋文案素材完成 ✅（影片尚未錄，這集是直播）
+  - 本集標題：`一份教材生出 30 種遊戲｜AI Agent 全自動操作 Wordwall`
+  - 交付：`output/一份教材生出 30 種遊戲 AI Agent 全自動操作 Wordwall [Claude]/`（`cover.png` + `metadata.md`）
+  - **新系列規則（重要，之後每一集沿用）**：
+    - 系列名 **「AI Agent 教學應用」**，**不編集數**，單集靠標題／主題自己成立（使用者明確指示）
+    - 系列主色 **電光青綠 `#14E0C8`**（避開 Claude 橘／Codex 藍／OpenCode 綠／AI Agent 基本功紫）
+    - 其餘沿用 yt-pack 慣例：純黑底、左上 LIVE 標＋系列標、超大主標、右上圓形徽章、右下標籤帶、右側三師爸真人去背
+  - 封面所有版本在 `2026第二大腦/yt-pack/live-wordwall-agent/`：`v10_final`（採用，Wordwall 節點最大）、`v8`、`v6`、`v9/v7/v4` 為無 logo 底圖
+  - **Wordwall logo 處理法（可重用）**：官方原檔 `app.cdn.wordwall.net/.../logo-large...png` → 深灰字轉白、圖示鏤空處補白底，才能貼在黑底上；用 PIL 合成到生圖時預留的黑色空節點，不要讓 gpt-image-2 自己畫 logo
+  - 「30 種遊戲」數字出處：Wordwall 官網首頁自述 30+ activity types
+- **2026-08-02 稍晚：本集長片＋3 短片全流程交付完成** ✅
+  - 來源：Downloads `AI Agent 教學應用_一份教材生成 30 種遊戲_用 Agent 來操控 Wordwall.mp4`（78:09 / 2.7GB / **真 CFR 30fps，不用轉檔**）→ `raw/aiagent-wordwall/原始.mp4`
+  - smart-cut `threshold 0.04 / margin 0.25sec,0.25sec` → **78:09 → 44:53（剪 42.6%）**；先送 45 秒樣本（20:00 起）給使用者聽，樣本僅剪 8.7%，力道安全；亮度抽樣 4 點 52–215，無黑幀
+  - 字幕：Groq 9403 詞 / 167 段 → resegment 1050 段 → apply_vocab 8 段 → **Claude 自行清字（使用者授權「字幕你來確認就好」）**：全域規則 229 段＋段落覆寫 6 段 → validate 通過（1050 段 / 44:49，時間碼零改動）
+  - **本集詞彙更正重點（Wordwall 系列沿用）**：
+    - **Wordwall**（WOWWO／WOWWOW／WOWOW／WOWO／WOW／WOWER／窩窩／渦渦／WorldWord／World War → Wordwall）、**Wordwall CLI**（WOWCLA／WOWCLT／WOWC-I／WOWClaude）
+    - **AI Agent**（AIAGEN／AIGEN／AI Aging／AGEN／Agin／A君／A群 → Agent）
+    - **ChatGPT**（TrackGPT／CheckGPT／ChadGPT／TrashGPT／缺GPT）、**AntiGravity**（Antigrality）
+    - **教學平台**：Padlet（Petlet）、LoiLoNote（Loyal Note／Royd Note）、因材網（鷹材網）、TronClass（Tron School）、ClassDojo（Claude Dojo）、Wayground（WayGang／微廣）
+    - **Level 1/2/3**（Label／LV）、**題型**（提醒）、**題數**（提速）、**考卷**（成券／成卷）、**因數倍數／因數分解／最大公因數／最小公倍數**（音速背書／紫音速分解／最大功音速）
+    - Playwright（Playweight）、Chrome（crone）、省 Token（Sentoken）、訂閱制（訂閱字）、輪詢（輪巡）、登入（登錄）
+    - **⚠️ 仍待使用者確認的 3 個詞**：模型名 **Luna / Luna Max**（原音 Duna／LUNA，我統一成 Luna）、**「選回收」**（疑為某個模式名，未動）、**Thinking 中**（原「相當於手的中」）
+  - 三短片（使用者指定主題，未走三候選流程）：
+    - Google Spark 的殺手級應用 輪詢 排程 Webhook（31:09.3–32:24.6，75s）
+    - Wordwall 八大題型一次看懂 全部自動出題（17:31.06–18:52.6，82s）
+    - Level 3 AI 生圖出題 考卷做不到的題目長這樣（34:38.56–35:58.7，80s）
+    - 每支七檔齊全（16:9 乾淨／16:9 字幕版／9:16 直式／srt／txt／cover／metadata）
+- **下一步**：使用者確認上述 3 個待確認詞彙後回改字幕；長片說明欄記得補 GitHub repo 連結（影片中承諾要放）
+
+## 上一個狀態（2026-08-02）
+- **最後操作者**：ChatGPT App
+- **進度**：已建立可獨立分享的 ChatGPT App 影片剪輯總控技能 ✅
+  - 位置：`skills/chatgpt-youtube-video-workflow/`
+  - 單一資料夾內含：`SKILL.md`、ChatGPT UI metadata、13 支剪輯／字幕／短片腳本、字幕／行銷／可攜安裝參考文件。
+  - 封面走 ChatGPT App 內建生圖，不讀 `OPENAI_API_KEY`；Groq key 只讀 `GROQ_API_KEY` 或 `~/.groq_api_key`，技能內沒有 key。
+  - ChatGPT 版輸出後綴：長片 `[ChatGPT]`、短片 `[ChatGPT] (Short)`。
+  - 已修正：極小幀率差的 VFR 漏判；auto-editor 在本機暫存區完成後才複製回 Google Drive；Windows 字卡字型路徑警告。
+  - 驗證：skill validator 通過、13 支 Python 腳本語法通過、preflight 全通過、實際用 `working/codex-flow-test/sample.cut.mp4` 跑 smart-cut 成功，測試輸出已刪除。
+- **下一步**：後續收到新影片時，直接指定「使用 chatgpt-youtube-video-workflow 處理 raw/<影片代號>」，先做 45 秒試剪再進字幕流程。
+
+## 上一個剪輯狀態（2026-07-26）
+- **更新時間**：2026-07-26
+- **最後操作者**：Claude Code（Opus 5）
+- **進度**：**AI Agent 基本功 EP07（需求探索四象限法／RDQ）長片＋3 短片全流程交付完成** ✅（使用者：字幕你幫我確認、三支短片都要剪）
+  - 來源：Downloads `AI agent基本功EP07_需求探索四象限法_釐清專案需求的最後一塊拼圖.mp4`（原長 57:27 / 1.86GB；**VFR**（avg=310245000/10341499≈29.99999，屬 EP04 那種「差一點就是 30」漏判型）→ **手動先轉真 CFR** 再剪）→ `raw/aiagent-ep07/`
+  - **⚠️【重要】smart-cut 參數本集大改（使用者連退兩次）**：
+    - v1 慣用甜蜜點 `0.06 / 0sec,0.1sec` → 21:37（剪 62.4%）→ 使用者：「聲音切得太多，很多字、語音都被切掉」
+    - v2 `0.04 / 0.25sec,0.25sec` → 36:36（剪 36.3%）→ 使用者：「還是剪太狠」
+    - **v3 `0.02 / 0.5sec,0.5sec` → 43:49（剪 23.7%）→ 使用者 OK** ✅
+    - **教訓**：所謂「實測甜蜜點 0.06/0sec,0.1sec」對這位口播者**不是通用值**；本集講話語速較慢、句中氣音多。日後新片**先跑一版 0.04/0.25 給使用者聽樣本**（切 45 秒樣本用 SendUserFile 送出最快），確認後才轉字幕，別直接 0.06 一路衝。
+    - 亮度抽樣 7 點 39–206，無黑畫面（CFR 轉檔有效）
+  - 字幕：Groq 8599 詞 → resegment 899 段 → apply_vocab 13 段 → **自行清字（使用者授權）**：段落覆寫 42 段＋跨段全域規則 131 段 → validate 通過（899 段、43:48）→ 未刪段
+  - **本集詞彙更正重點（AI Agent／RDQ 系列沿用）**：
+    - **AI Agent**（AI Agents／AI Aging／AI群／A群／Agin／AI君／AIG／的A集／AI域 → Agent；小寫 agent → Agent）
+    - **四象限**（四項線／四項限／四個項限／四個向線／視像線／第一項目 → 四象限；「需求探索視像線」→「需求探索四象限」）
+    - **Cloudflare**（ClaudeFlare／Claude Flare → Cloudflare，**Claude 頻道容易誤判成 Claude 家族產品，注意**）
+    - **ChatGPT**（TradeGPT／ChackGPT／ChartGPT／CheckGPT／ChagPT → ChatGPT；TradeGPTAppSkill → ChatGPT App Skill）、**ChatGPT Site**（GPT-Site／ChatGP site，含跨段 `GPT`+`Site`）
+    - **chezmoi update**（ChaseModeUpdate）、**RDQ Skill**（RDQSkill／RDQSKILL／RDQSkills／RDQSKID／RTQSkills）
+    - **雞同鴨講**（機同壓腳）、**已知未知**（以知為知）、**教師研習/教師的程度**（教室演習/教室的程度）、**少走彎路/少花 Token**（掃走彎路/掃花token）
+    - **原則上**（院上／原本上／越來越上，⚠️「因為上次這樣啦」不可套規則，已用段落覆寫）
+    - 其他：GitHub Report→GitHub repo、Superbase→Supabase、Open Code→OpenCode、Antigrate/Antigrity→AntiGravity、生本→身分、啟動PGuy→啟動批改、使用模型→使用規模、貿用→冒用、班級做好→班級座號、免登錄→免登入、一戰是全包/一戰四搞定→一站式、題杜→題庫、四潮案→草案、椅子三小時→已知三小時
+    - Whisper 重複亂碼已清：「律師」連跳 4 段（781–784）、「第一次看到我頻道影片」×3（87）
+  - **❓待使用者確認（唯一未解）**：片中提到「前陣子很紅、會問非常多問題、太煩人」的既有需求釐清專案，Whisper 給 `Greemme`／`GreenMe` 兩種拼法，**字幕統一暫寫 `GreenMe`**（段 184／186／396／397／606）。使用者確認正確拼法後，長片與短片 B 字幕要一併替換。
+  - 長片標題 Claude 自訂：「AI Agent 基本功 EP07：需求探索四象限法，釐清專案需求的最後一塊拼圖」
+  - 長片交付：`output/AI Agent 基本功 EP07 需求探索四象限法，釐清專案需求的最後一塊拼圖 [Claude]/`（5 檔；**封面沿用 yt-pack `ai-agent-ep07` v3**——黑底霓虹紫＋四象限拼圖，AI Agent 系列色）
+  - **短片 3 支全做，各 7 檔（含 9:16 直式）；三支都壓在 60 秒內 → 可進 Shorts feed**：
+    - A 痛點型「別再跟 AI 雞同鴨講 需求先問清楚，少走很多彎路」（57.6s；`00:05:21.680-05:56.900, 00:36:17.594-36:28.914, 00:36:51.414-36:59.474`）封面黑底紫
+    - B 好奇型「提示詞完整不等於需求完整，你少講了兩個象限」（57.7s；`00:23:49.236-24:07.576, 00:26:46.396-27:01.276, 00:27:52.676-28:04.056, 00:28:28.236-28:38.356`）封面黑底紫＋四宮格
+    - C 工具型「ChatGPT Site 內建資料庫，不用再接 Firebase」（58.7s；`00:16:42.338-17:06.158, 00:19:46.938-20:12.358, 00:22:40.516-22:46.996`）封面黑底**電光藍＋黃字**（ChatGPT 主題）
+  - **✅ ffmpeg 環境好消息（本次實測）**：`add_end_card.py` 的 **drawtext 已不再 segfault**（抽幀確認字卡「詳細影片請看留言」正常）、`burn_subtitles.py` 中文字幕也直接燒得起來、`make_vertical.py` 三支都 1080×1920 過。**先前 EP06/EP14 那套 PIL 字卡＋fonts.conf 手工繞道本次不需要**，日後可先直接試官方腳本。
+  - 內容重點（供日後剪同系列參考）：RDQ＝需求探索四象限法。四象限＝①你知道你知道的（明確提供）②你知道你不知道的（AI 澄清）③你不知道你知道的（習以為常的細節，靠訪談挖）④你不知道你不知道的（靠內建通用題庫探索風險/備案/個資/著作權）。RDQ Skill 兩版（Claude Code／OpenCode／AntiGravity 共用 ＋ ChatGPT App 專版），裝好說「用 RDQ 問我」，**最多問三輪**，產出一頁草案規格卡。內建**六大題庫**（前五通用、最後一類教師場景，非教師請 Agent 置換）。**彩蛋：ChatGPT Site 已內建 Cloudflare D1／R2 後端資料庫**，一行提示詞開啟、額度內免費，不用再接 Firebase／Supabase。本集為基本功系列最後一集，下週起轉「AI 教學應用」。直播中主機因 GPT 跑程式卡死，改用筆電（`chezmoi update` 一鍵同步技能）續講。
+  - **【追加】四象限教學片段**（使用者指定「講四個象限（知道跟不知道）的那一段抽出來」）：
+    - `output/需求探索四象限法完整解說 知道與不知道的四種組合 [Claude] (教學片段)/`（**6 檔**：乾淨 16:9／字幕燒錄版／srt／txt／cover／metadata；使用者追加要求補封面與 metadata，**教學片段/導覽片不加結尾字卡**，故為 6 檔不是 7 檔）
+    - 7:21.7；時間碼 `00:23:19.336-00:28:38.356`（四象限定義，起點＝「好,來解釋一下這 RDQ Skill 是什麼東西」）＋ `00:28:41.876-00:30:44.596`（四種已知對應 AI 四種動作）
+    - 中間刻意剪掉段 576–577「你理解這個概念了,幫我在聊天室打個二」直播互動
+  - **【追加】頻道導覽片段**（使用者指定「最開頭教大家怎麼使用三師爸頻道的那一段」）：
+    - `output/第一次來三師爸頻道 該從哪裡開始看才不會迷路 [Claude] (頻道導覽)/`（**6 檔**含 cover／metadata，3:01.8）
+    - 時間碼 `00:00:35.880-00:03:13.700`（導覽本體：別看首頁要看播放清單→AI Agent 基本功七集→再依慣用 AI 選 Claude Code／GPT／AntiGravity／OpenCode 播放清單）＋ `00:04:20.460-00:04:44.460`（收尾呼應：很多老師說內容太難→照索引從播放清單開始看）
+    - 中間剪掉段 60–80（今天是最後一集、接下來播進階應用的系列預告）
+    - **此片可重複利用**：內容不綁本集，日後可當頻道置頂導覽或新片開頭素材
+  - **⚠️ 事後修正（同日，剪頻道導覽時發現）**：①`Antigravity` 有 2 處沒統一成 **AntiGravity**（清字腳本只擋了 Antigrate／Antigrity 兩種變體，**漏了拼字正確但大小寫錯的原詞**——日後規則要一併涵蓋「拼對但大小寫錯」）；②段 87 是 Whisper 重複亂碼，原本覆寫成單句仍與段 86 重複，已改成把段 86 的句子拆到 87（只用原話）。**踩坑：validate_srt 不接受空白段**，所以不能把重複段清空，必須改寫。長片 srt/txt 已回寫交付資料夾；三支短片與四象限教學片段不含這幾段、不受影響。
+  - 上架提醒：說明欄務必補 **RDQ Skill 三個 GitHub repo 連結**（片中承諾；片中只提到兩版，OpenCode 版是直播後才建的，說明欄建議加註「OpenCode 使用者請改用 OpenCode 版」）＋ 專案初始化/開工/收工那集 ＋ EP01–EP06 播放清單；短片留言區置頂長片連結。
+    - Claude Code 版：https://github.com/mathruffian-dot/rdq-skill
+    - ChatGPT App 版：https://github.com/mathruffian-dot/rdq-skill-chatgpt-app
+    - OpenCode 版：https://github.com/mathruffian-dot/rdq-skill-opencode
+    - 註：另有 `mathruffian-dot/rdq-method` 為 **private**，不可貼說明欄（觀眾會 404）
+- **前一支（2026-07-21）**：**Claude Code 基本功 EP14（Remote Control 完全解放·跨裝置協作）長片＋3 短片全流程交付完成** ✅（使用者：字幕我確認、3 短片我決定、一次做到完；全自動無 STOP）
+  - 來源：Downloads `Claude code 基本功EP14_Remote Control 完全解放手機_電腦_筆電同步協作專案.mp4`（原長 26:00 / 905MB；**⚠️ VFR**（avg≠r_frame_rate）→ smart_cut 自動先轉 CFR）→ `raw/claude-ep14/`
+  - smart-cut（0.06 / `0sec,0.1sec`）→ 15:30（剪 40.4%）；**VFR 片特別做密集亮度抽樣（60/200/400/600/800/870/900/925s）＝123–204，全程無黑畫面，轉檔成功**
+  - 字幕：Groq 3389 詞 → resegment 351 段 → apply_vocab → 自行清字 → finalize 套 21 段 → validate 通過（351 段、15:29）
+  - **本集詞彙更正重點**：**Groq Code→Claude Code**（關鍵誤聽）、**Aniable→Enable**（Enable Remote Control by Default）、**Remove Control→Remote Control**、桌面板→桌面版、栽要→摘要、TrackGPT→ChatGPT、A群→Agent、AI Edge→AI Agent、Station→Session、雲端碟→雲端硬碟、上於→上雲、原來上→原則上
+  - 長片標題 Claude 自訂：「Claude Code 基本功 EP14：Remote Control 完全解放，手機、筆電、電腦同步協作」
+  - 長片交付：`output/Claude Code 基本功 EP14 Remote Control 完全解放，手機、筆電、電腦同步協作 [Claude]/`（5 檔；**封面沿用 yt-pack `claude-basics-ep14`**，黑底橘色·手機/筆電/電腦雲端同步）
+  - **短片 3 支全做**（16:9，自選主題＋標題）：
+    - A「Claude Code Remote Control 怎麼開？兩層開關一次搞懂」（62.3s）
+    - B「用手機遙控家裡電腦，對話完全同步」（68.7s）
+    - C「電腦不關機，你在哪都能繼續做同一個專案」（48.5s）
+    - 交付：各 6 檔；封面依慣例 draw.py 生**黑底霓虹橘**（Claude 系列色）。未做 9:16（未要求）。
+  - **踩坑（新）**：一次連續生 3 張封面會超過 Bash 2 分鐘 timeout（第 3 張未完成）→ 已單獨補生。**日後 3 張封面建議分批或加大 timeout。**
+  - 內容重點（供日後剪同系列參考）：Remote Control **兩層開關**（Settings 的 Enable Remote Control by Default ＋ 每個 Session 再開，藍色＝已開）；手機 App / 網頁版 Claude / 另一台電腦都能連回主機同一對話，**運算與檔案都在主機**；配雲端硬碟取用成果；前提是主機不關機。片中預告 **RDQ Method（需求探索）** 會另開一集。
+- **前一支（2026-07-20）**：**ChatGPT App 基本功 EP07（一份 YAML 指揮 6 個 AI 同時做簡報）長片＋3 短片全流程交付完成** ✅（使用者：字幕我決定、3 短片我決定、直接做到好；全自動無 STOP）
+  - 來源：Downloads `ChatGPT App 基本功 EP07_一份 YAML_指揮 6 個 AI 同時做簡報.mp4`（原長 78:01 / 2.71GB；**CFR** 30/1、1080p，免轉檔）→ `raw/chatgpt-ep07/`
+  - smart-cut（0.06 / `0sec,0.1sec`，C:\temp 再搬回）→ 36:39（**剪 53%**，demo 等待生圖多屬正常）；亮度 93–202（深色 IDE/終端畫面偏暗、非黑）
+  - 字幕：Groq 8427 詞 → resegment 810 段 → apply_vocab → 自行清字 → finalize 套 151+1 段 → validate 通過（810 段、36:38）
+  - **本集詞彙更正重點（ChatGPT App/簡報系列沿用）**：
+    - **ChatGPT**（Claude GPT／TrackGPT／TransgPT／CheckGPT／ChackGPT／JGBT／缺GPT／TradgePT／TrashGit的App → ChatGPT／ChatGPT App）
+    - **Subagent**（Subaging／Sub Aging／Sup Agent／Sub-Agen／SubEdge／Sub H／A菌／SUB-A菌 → Subagent）。**⚠️同 EP06 的連寫坑**：規則命中已正確的 `Subagent` 內部 → `Subagentnt`（9 處），已用 `Subagentnt→Subagent` 修回。**日後 Subagent/Agent 類替換都要防「命中正確詞內部」**。
+    - **生圖**（深圖／生徒／升塗／升圖）、**YAML**（YML）、**訂閱制**（訂閱字/式）、**Baked**（Back-Kit/Bakkit/Backit）純圖片 vs **Plate** 可編輯文字、**思源**（出源）、**逐頁**（竹葉）
+    - 其他：Draw 技能（主要技能）、Claude Code（Claude Core）、AntiGravity（Antiguity）、Codex CLI（Codex COI）、關係圖（關機圖）、頁數（夜數）、溢位檢查（異位）、12頁（12月）、Agent（A-GEN/Agin/aging/A群）
+  - 長片標題 Claude 自訂：「ChatGPT App 基本功 EP07：一份 YAML 指揮 6 個 AI 同時做簡報」
+  - 長片交付：`output/ChatGPT App 基本功 EP07 一份 YAML 指揮 6 個 AI 同時做簡報 [Claude]/`（5 檔；**封面沿用 yt-pack `live-chatgpt-app-ep07/…yaml-6-agents`**，藍色科技風＋黃字，YAML→6 AI→6 簡報）
+  - **短片 3 支全做**（16:9，自選主題＋標題）：
+    - A「ChatGPT 生圖太慢？用 Subagent 讓它快好幾倍」（52.9s）
+    - B「AI 生的簡報為什麼這麼好看？內容跟設計要分開」（38.6s）
+    - C「AI 生圖一張只要 0.3 元｜API Key 比訂閱還划算」（28.8s）
+    - 交付：各 6 檔；封面依慣例 draw.py 生**黑底電光藍＋黃字**（ChatGPT App 系列色）。未做 9:16（未要求）。
+  - ffmpeg 環境解法沿用（PIL 字卡＋fonts.conf＋loop filter＋MSYS_NO_PATHCONV），1080p 全成功。
+  - 上架提醒：說明欄放 **YAML Image Deck 技能 GitHub repo 連結**（片中承諾）、「把 OpenAI Image 2 API Key 裝進 Claude Code」那集連結。片尾 API Key＋6 Subagent 生圖**失敗**（Codex 禁止代理呼叫外部 API），三師爸刻意保留失敗實況。
+  - **【2026-07-22 追加】第 4 支短片**（使用者指定「簡報畫面解說 YAML Image Deck 用途」那段）：
+    - 「YAML Image Deck 是什麼？一份 YAML 讓 AI 簡報風格統一」（57.4s；`00:25:56.708-26:38.668, 00:29:42.962-29:51.442, 00:29:59.262-30:03.122`）
+    - 內容：設計合約非繪圖程式 → 鎖風格 → 依內容決定版型 → 版型與風格對齊 → 放文字；YAML 管規則、AI 生成畫面、AI 自己驗收。畫面就是那張「YAML Image Deck·完整使用指南」簡報頁。
+    - 交付 6 檔；封面黑底電光藍＋黃字（deck.yaml＋風格→版型→文字流程＋三張一致簡報縮圖）。
+  - **⚠️ 事後修正（同日）**：長片字幕原有 **`Platee`** 誤字 2 處——先前替換規則「做Plat→做 Plate」「叫做Plat→叫做 Plate」命中了**已正確的 `Plate`** 造成連寫。已修回 `Plate`（0 殘留、正常 5 處），長片 `.srt`/`.txt` 已回寫交付資料夾；3 支舊短片未含此字、不受影響。**再次提醒：所有替換都要防「命中正確詞內部」（Agentt / Subagentnt / Platee 已連續三次踩到）。**
+- **前一支（2026-07-19）**：**AI Agent 基本功 EP06（跨 Agent、跨電腦協作同一專案）長片＋3 短片全流程交付完成** ✅（使用者：全流程我決定、一次做到底、3 短片；全自動無 STOP）
+  - 來源：Downloads `AI Agent 基本功EP06_跨 Agent 跨電腦協作專案.mp4`（原長 68:20 / 2.38GB；**CFR** 30/1、1080p，免轉檔）→ `raw/aiagent-ep06/`
+  - smart-cut（0.06 / `0sec,0.1sec`，C:\temp 再搬回）→ 47:52（剪 29.9%）；亮度 ~203 無黑畫面
+  - 字幕：Groq 11994 詞 → resegment 1110 段 → apply_vocab → 自行清字 → finalize 套 131+3 段 → validate 通過（1110 段、47:48）
+  - **本集詞彙更正重點（AI Agent/跨機協作系列沿用）**：
+    - **chezmoi**（被聽成十幾種：ChessMoy/ChesMoy/ChaseMoy/ChaseMode/Chess Mode/Chest Mode/TraceMode/TraceMoy/Trash mode/ChessMoid → chezmoi；指令 add/update 併修）
+    - **Agent**（A群/A君/A型/aging/Edge/HG/Agin → Agent）。**⚠️踩坑**：apply_vocab 已先把部分 `Agen`→`Agent`，我又加「個Agen→個 Agent」導致既有 `Agent` 被二次替換成 **`Agentt`（23 處）**；已用 `Agentt→Agent` 修回。**日後對 `Agen` 一律用『後接非 t』的條件（避免傷 Agent），別做裸 `Agen→Agent`。**
+    - agents.md（agin.md/agence.md/agent.md/Agents、MD/Agent's MD）、handoff.md（handoff.nb/handoff.m d）、.gitignore（gitignal）
+    - Opus 4.8（up4.8）、Big Pickle（BigPo）、GLM 5.2、ChatGPT（ChateGPT）、Claude Code（Claude Coach）、Claude Code、GPT（Claude CodesGPT）
+    - C槽（稀巢/西草/西朝）、撐爆（稱爆）、題庫建置（題戶/題固/建制/歷屆事體）、程式（城市）、桌機（桌子機）、多花 Token（多花圖）
+  - 長片標題 Claude 自訂：「AI Agent 基本功 EP06：跨 Agent、跨電腦協作同一個專案，設定觀念一次到位」
+  - 長片交付：`output/AI Agent 基本功 EP06 跨 Agent、跨電腦協作同一個專案，設定觀念一次到位 [Claude]/`（5 檔；**封面沿用 yt-pack `live-ai-agent-ep06/…v3`**，AI Agent 系列＝**黑底紫色**、三台筆電機器人連共用資料夾）
+  - **短片 3 支全做**（16:9，自選主題＋標題）：
+    - A「跨電腦做 AI 專案第一步｜別用瀏覽器的雲端硬碟」（64.5s）
+    - B「換電腦不用重設｜chezmoi 一鍵同步你的 AI 技能與設定」（50.5s）
+    - C「AI 技能就是一份說明書，一句話同步給所有 Agent」（38.1s）
+    - 交付：各 6 檔（乾淨16:9／字幕16:9／srt／txt／cover／metadata）；封面依 yt-pack 慣例 draw.py 生**黑底紫色**終端機風（AI Agent 系列色）。未做 9:16（未要求）。
+  - ffmpeg 環境解法沿用（PIL 字卡＋fonts.conf＋loop filter＋MSYS_NO_PATHCONV），1080p 全成功。
+  - 上架提醒：說明欄放**三個技能（初始化/開工/收工）GitHub repo 連結**（片中承諾）、搭配觀念那集直播＋Claude Code EP10 連結。
+- **前一支（2026-07-18）**：**OpenCode 基本功 EP06（各種模型正確用法＋Kimi K3）長片＋3 短片全流程交付完成** ✅（使用者要求「全流程你決定、一次做到底、3 短片都要」→ 全自動無 STOP）
+  - 來源：Downloads `OpenCode 基本功 EP06...mp4`（原長 93:31 / 3.25GB；**CFR** 30/1、1080p，免轉檔）→ `raw/opencode-ep06/`
+  - smart-cut（threshold 0.06、margin `0sec,0.1sec`，輸出 C:\temp 再搬回）→ 50:04（剪 46.5%）；亮度 187–202 無黑畫面
+  - 字幕：Groq 12026 詞 → resegment 1240 段 → apply_vocab → 授權自行清字 → finalize 套 134 段更正 → validate 通過（1240 段全吻合、50:03）→ 未刪段
+  - **本集詞彙更正重點**（OpenCode/模型系列沿用）：
+    - **DeepSeek**（DeepSeq/Deep Stick/Dip-Cit/DeepSecret/Deep-6/DF6/Deep-Sig/Deepseeker → DeepSeek）
+    - **GLM 5.2**（GroqM5.2/GroM5.2/GN5.2/GN5.2X → GLM 5.2）
+    - **Grok 4.5**（Groq 4.5/瓜哥/刮個/Gwag/Gwack/Waq/Wag4.5 → Grok 4.5；**xAI 的 Grok 模型 vs Groq 免費 API provider 是兩回事**，「Groq的免費API」「Groq API」保留 Groq）
+    - **GPT-5.6**（GPT-SOUL/GPT5.6Soul/GPT-S OUL → GPT-5.6）、Kimi K3（Gimini K3→Kimi K3）、Opus/Sonnet（Apps, Sonic）、Fable 5、Claude Fable 5
+    - **Token**（圖墾/圖殼→Token）、多模態（多摩胎/多魔胎/多模太）、支援（資源圖片→支援圖片）、Agent（aging/A群/Edge）
+    - 其他：主力（阻力/足利）、上下文（上下尾）、撐爆（稱爆）、閉源模型（必源模型）、養套殺（仰套殺）、三國鼎立（三國典力）、歷屆試題（歷屑/例介事體）、大陸（路板）、去審（去省，模型互審）、二分之一（1.2分之1）
+  - 長片標題 Claude 自訂：「OpenCode 基本功 EP06：各種模型正確用法全解析，最強開源模型 Kimi K3 正式登場」
+  - 長片交付：`output/OpenCode 基本功 EP06 各種模型正確用法全解析，最強開源模型 Kimi K3 正式登場 [Claude]/`（5 檔；**封面沿用 yt-pack 現成 v2**）
+  - **短片 3 支全做**（16:9，Claude 自選主題＋標題）：
+    - A「你的 AI 讀不到圖片，還不會告訴你」（48.9s；`00:08:55.720-09:41.540`）
+    - B「切換模型會偷吃你的 Token｜OpenCode 切換原理」（44.2s；`00:27:14.826-27:43.646, 00:28:33.806-28:46.166`）
+    - C「開源最強 Kimi K3 送兩倍用量，現在最划算」（43.4s；三國鼎立＋送兩倍＋CTA 三段）
+    - 交付：各 **6 檔**（乾淨16:9／字幕16:9／srt／txt／cover／metadata）；**未做 9:16 直式**（使用者只說 3 短片；要直式可補）
+  - **⚠️【重要】封面慣例已改（本次新增，日後一律遵守）**：頻道實際封面在 **`G:\我的雲端硬碟\2026第二大腦\yt-pack\<episode>\`**（一集一夾）。**剪某集前先查有無現成封面 → 有就沿用**；生封面以 yt-pack 慣例為第一優先（**純黑底＋真人去背照＋終端機風＋強調色：Claude 橘/Codex 藍/OpenCode 綠**）。已寫入 `CLAUDE.md §封面規範 第0條` 與 `assets/style/yt-pack-cover-convention.md`。本集長片用 yt-pack v2；3 短片依此用 draw.py 生黑底綠終端機風（效果佳）。
+  - **ffmpeg 環境踩坑（沿用解法仍有效）**：drawtext segfault→PIL 畫字卡；libass 需 `fonts.conf`+`FONTCONFIG_FILE`；`-loop 1` PNG 溢位→`loop` filter；Git-Bash 需 `MSYS_NO_PATHCONV=1`。本集 1080p 字卡/燒字幕全成功。
+  - **⚠️ 事後更正（2026-07-19，使用者指出）**：片中三師爸把 Kimi K3 的「2X」解讀成「OpenCode 送兩倍用量／省一半」是**錯的**——OpenCode 的 **2X＝消耗兩倍用量**（更快用完額度），非贈送。已處理：①長片 `.srt` 後半段 6 段（`00:45`–`00:48`）句末加更正註解、②長片 `metadata.md` 加更正、③**短片 C 整支重剪**：原「開源最強 Kimi K3 送兩倍用量，現在最划算」作廢刪除，改為「開源最強 Kimi K3 登場 三國鼎立，受益的是我們」（拿掉所有 2X 片段、換標題/封面/字幕，只留正確的三國鼎立·開源受益內容）。**日後 OpenCode/OpenRouter 系列遇到模型標 2X/×2 一律解讀為「雙倍消耗」。**
+- **前一支（2026-07-12 深夜，Fable 5）**：**AI Agent 基本功 EP05（三層一次講清楚：技能/全域/專案）長片＋3 指定短片全流程交付完成** ✅
   - 來源：Downloads `AI Agent基本功 EP05_三層一次講清楚_搞定 技能_全域_專案.mp4`（61:46 / 2.1GB / 真 CFR）→ `raw/aiagent-ep05/`；smart-cut → 45:51（剪 25.8%）
   - 字幕：Groq 10872 字 → 修正版 resegment 998 段（**孤兒殘尾 0**，修復持續生效）→ 使用者授權清字全自動 → 156 段更正 → validate 通過 → 刪 1 抖內 → 最終 997 段 / 45:51
   - **本集詞彙更正重點**：Edge TTS 家族（HTTS/Agen DTS/HTS松任/STS，**先做保護避免被 Agent 規則掃到**）、Agent 家族超多變體（Aging/AGEN/A-GEN/Agin/Agen/AiGEN/A局/A群/Edging/ARH…）、agint.md→**AGENTS.md**、權域→全域、三層備員→備援、圖坑→Token、人民黨民→**人名檔名**（引用語音正規化規則的關鍵句）、Kamit加Push跟Pori→Commit加Push跟Pull、108克剛→108課綱、Gil repo→Skill repo、李俊尼Soyul→李俊儀SOIL、C-Dance→Seedance、Meta Bloodlib→Matplotlib、F5 MPEG→FFmpeg、三師爸的生意→聲音
