@@ -47,3 +47,6 @@ generated/
 
 # Claude Code worktrees（本機暫存，不進 git）
 .claude/worktrees/
+
+# Claude Code 本機權限設定（含本機路徑）
+.claude/settings.local.json
