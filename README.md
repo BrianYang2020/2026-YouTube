@@ -5,9 +5,13 @@
 
 ---
 
-## 🚀 第一次拿到這個 repo？
+## 🚀 關於這個 repo
 
-**請先看 [`SETUP.md`](./SETUP.md)** — 完整的安裝、API key、個人化清單、第一次跑流程。
+本 repo 為 [`BrianYang2020/2026-YouTube`](https://github.com/BrianYang2020/2026-YouTube)，fork 自 [`mathruffian-dot/2026-YouTube`](https://github.com/mathruffian-dot/2026-YouTube)。
+
+- 安裝、API key、個人化清單、第一次跑流程：看 [`SETUP.md`](./SETUP.md)
+- 目前進度：看 [`HANDOFF.md`](./HANDOFF.md)
+- 原作者的交班紀錄與實戰經驗：看 [`docs/reference/upstream-handoff-mathruffian.md`](./docs/reference/upstream-handoff-mathruffian.md)
 
 ---
 

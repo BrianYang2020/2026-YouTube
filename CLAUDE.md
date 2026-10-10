@@ -1,6 +1,7 @@
 # 2026Youtube — YouTube 影片自動化工作流
 
-> **⚠️ 拿到此 repo 的新使用者**：先讀 `SETUP.md`，依「個人化清單」改完該改的（人物照、API key、頻道風格、HANDOFF.md），再開始用。下面這份 CLAUDE.md 寫的是工作框架，個別內容（如「光武國中」「翰林版本」「三師爸」）是 mathruffian 的範例。
+> **本 repo 為 `BrianYang2020/2026-YouTube`**，fork 自 `mathruffian-dot/2026-YouTube`。API key 與 HANDOFF 已個人化；**人物照與頻道封面風格尚未個人化**，目前 `三師爸` 相關引用仍是原作者的範例（進度見 `HANDOFF.md`）。
+> 原作者的完整交班紀錄與實戰經驗：`docs/reference/upstream-handoff-mathruffian.md`。
 
 ## 專案簡介
 本專案是一條 **YouTube 影片自動化生產線**。使用者把原始影片素材丟進 `raw/`，AI 代理人接力完成：
@@ -56,10 +57,10 @@
 
 ## 封面規範（兩條線必讀）
 
-### 0. 【最優先】頻道封面慣例 → 先查 yt-pack
-**頻道實際上架封面的真相在 `G:\我的雲端硬碟\2026第二大腦\yt-pack\<episode>\`**（由全域 `yt-pack` 技能產出，一集一資料夾）。
-- **剪某一集前，先去 yt-pack 找這一集有沒有現成封面**：有就**直接沿用**（複製成 `output/<標題>/cover.png`），沒有才自己生。
-- 生封面時**以 yt-pack 慣例為第一優先**：**純黑底＋三師爸真人去背照（右側）＋左側超大粗體主標＋左上系列標籤＋右上 FREE/徽章＋右下標籤帶＋手捧發光終端機/產品 mockup**；強調色依主題（**Claude=橘/黃、Codex=藍、OpenCode/多模型=綠 CLI 風**），維持「黑底＋單一強調色」。
+### 0. 【最優先】頻道封面慣例
+> ⚠️ 以下慣例是原作者頻道的風格，**待個人化**。原作者另有本機 `yt-pack` 封面庫（`G:\` 雲端硬碟），本 repo 沒有，**不要去找**。
+- 若使用者已提供某集的現成封面，就**直接沿用**（複製成 `output/<標題>/cover.png`），沒有才自己生。
+- 生封面時以下列慣例為第一優先：**純黑底＋三師爸真人去背照（右側）＋左側超大粗體主標＋左上系列標籤＋右上 FREE/徽章＋右下標籤帶＋手捧發光終端機/產品 mockup**；強調色依主題（**Claude=橘/黃、Codex=藍、OpenCode/多模型=綠 CLI 風**），維持「黑底＋單一強調色」。
 - 完整慣例見 `assets/style/yt-pack-cover-convention.md`。舊的 `cover-style.md`（深藍＋橘粒子）已被取代，只當色票參考。
 
 ### 1. 人物基準照
@@ -131,23 +132,21 @@ gpt-image-2 在 edit 模式下會延續人物的臉、髮型、體型、穿著�
    - 其他相關素材
 9. **更新 `HANDOFF.md`**：標註本支影片狀態（草稿 / 待審 / 完成）
 
-## Obsidian 關聯資料
-- `2026Youtube/工作筆記.md` — 第二大腦中的對應筆記，存進度與點子
-
-## 三處同步指引
+## 存放與同步
 | 平台 | 路徑 / 位置 | 用途 |
 |------|-------------|------|
-| Google Drive | `G:\我的雲端硬碟\2026Youtube\` | 主要工作目錄，Claude Code / Codex 直接讀寫 |
-| Obsidian | `2026Youtube/` | 第二大腦，存創意點子與工作筆記 |
-| GitHub | `mathruffian-dot/2026-YouTube` | 版本控制與備份（**公開** repo，勿放本機設定與個資） |
+| 本機 | `C:\Claud Code\Projects\YT Automate` | 主要工作目錄，Claude Code / Codex 直接讀寫 |
+| GitHub | `BrianYang2020/2026-YouTube`（`origin`） | 版本控制與備份（**公開** repo，勿放本機設定與個資） |
+| GitHub 上游 | `mathruffian-dot/2026-YouTube`（`upstream`） | 原作者 repo，只拉更新、不推送 |
 
 ## 工作注意事項
-- 此資料夾位於 Google 雲端硬碟，跨裝置自動同步
+- 此資料夾在本機、不在雲端同步資料夾內（避免 `.git` 與大型影片檔的同步衝突）
 - 影片原始檔可能很大，預設**不**進 git（見 `.gitignore`）
 - 每次工作前後都要更新 `HANDOFF.md`
 - API Key（Groq、OpenAI）放在使用者家目錄，**不**進 repo
 
 ## 最近更動紀錄
-| 日期 | 變更摘要 | GDrive | Obsidian | GitHub |
-|------|----------|--------|----------|--------|
-| 2026-05-10 | 專案初始化、建立雙 AI 接力框架、複製兩個 Skill | ✅ | ✅ | ✅ |
+| 日期 | 變更摘要 |
+|------|----------|
+| 2026-05-10 | （原作者）專案初始化、建立雙 AI 接力框架、複製兩個 Skill |
+| 2026-10-10 | fork 至 BrianYang2020，移到本機路徑；HANDOFF 重置、原交班紀錄移到 `docs/reference/`；移除 Google Drive／Obsidian／yt-pack 引用 |

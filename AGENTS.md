@@ -2,7 +2,8 @@
 
 > 這份檔案是 **OpenAI Codex** 在本專案的入口。Claude Code 讀的是 `CLAUDE.md`，內容與本檔對齊。
 >
-> **⚠️ 拿到此 repo 的新使用者**：先讀 `SETUP.md`，依「個人化清單」改完該改的（人物照、API key、頻道風格、HANDOFF.md），再開始用。
+> **本 repo 為 `BrianYang2020/2026-YouTube`**，fork 自 `mathruffian-dot/2026-YouTube`。API key 與 HANDOFF 已個人化；**人物照與頻道封面風格尚未個人化**（進度見 `HANDOFF.md`）。
+> 原作者的完整交班紀錄與實戰經驗：`docs/reference/upstream-handoff-mathruffian.md`。
 
 ## 你是誰
 你是 **OpenAI Codex**，與 **Claude Code** 在本專案接力完成 YouTube 影片自動化生產線。
@@ -92,7 +93,7 @@ skills/      # 共用 Skill
 - 下一個 AI 接手時要做什麼
 - 有沒有踩到坑、有沒有待解問題
 
-## 同步機制
-- Google Drive 自動同步檔案
-- GitHub 是版本備份：`mathruffian-dot/2026-YouTube`
-- Obsidian 對應筆記：`2026Youtube/工作筆記.md`（給人讀的）
+## 存放與同步
+- 本機工作目錄：`C:\Claud Code\Projects\YT Automate`（不在雲端同步資料夾內）
+- GitHub 版本備份：`BrianYang2020/2026-YouTube`（`origin`）
+- 上游原作者 repo：`mathruffian-dot/2026-YouTube`（`upstream`，只拉更新、不推送）
