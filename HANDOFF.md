@@ -16,6 +16,6 @@
   - `output/` 內 52 個資料夾是原作者的交付成品，僅供參考
 - **下一步**：
   1. ~~個人化人物照~~ ✅ 2026-10-10 完成：基準照 `assets/persona/人物形象照.png`（微笑），另有 `expressions/`／`poses/`／`scenes/`；照片不進 git，換電腦要從 `人物特徵.zip` 手動放回
-  2. ~~個人化頻道風格~~ ✅ 2026-10-10 完成：`assets/style/cover-style.md` 重寫為「炭黑底 `#14161A`＋三系列強調色」（AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`）；原作者的 `yt-pack-cover-convention.md`、`reference-thumbnails.png` 移到 `docs/reference/`。**此風格尚未實際生過封面**，第一次生圖時要檢查效果、必要時微調 prompt
+  2. ~~個人化頻道風格~~ ✅ 2026-10-10 完成：`assets/style/cover-style.md` 重寫為「炭黑底 `#14161A`＋三系列強調色」（AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`）；原作者的 `yt-pack-cover-convention.md`、`reference-thumbnails.png` 移到 `docs/reference/`。已實測兩輪（三系列各 2 張，`working/cover-test/`，不進 git），v2 方向定案，修正點已寫進 `cover-style.md` 第六、八節；OpenAI 帳號可正常生圖（無 403）
   3. 個人化字幕詞彙表：`skills/audio-to-srt/references/vocabulary.md`、`scripts/apply_vocab.py`
   4. 丟第一支影片到 `raw/<影片代號>/原始.mp4` 試跑完整流程
