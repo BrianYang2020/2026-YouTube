@@ -176,18 +176,16 @@ python skills/short-video-workflow/scripts/make_vertical.py \
 ### Step 9：產封面（沿用長片封面 SOP）
 
 **生封面前 SOP（缺一不可）**：
-1. `Read assets/style/reference-thumbnails.png`
-2. `Read assets/style/cover-style.md`
-3. `Read assets/persona/三師爸人物形象照.png`
-4. 依影片主角決定主色：Claude=橘 / Codex=藍 / 兩者並用=橘+藍
+1. `Read assets/style/cover-style.md`（唯一風格基準）；若 `assets/style/reference-thumbnails.png` 存在才 Read
+2. 判斷系列 → 強調色（AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`）
+3. 依標題情緒從 `cover-style.md` 第五節選人物照片並 `Read`（每次重新讀）
 
 **短片封面額外要求**：
-- 標題用**最短最聳動**的版本（封面標題可以比 YouTube 標題更精煉）
-- 加「SHORT」或「精華」字樣小貼紙作識別（選擇性）
-- 16:9 尺寸與長片同樣板
+- 標題用**最短、結果最具體**的版本（封面標題可以比 YouTube 標題更精煉）
+- 16:9 封面與長片同樣板；有做 9:16 直式時，另依 `cover-style.md` 第四節生直式封面（`--size 1024x1536`）
 
 呼叫方式：
-- **Claude Code**：`python skills/cover-image/draw.py "<prompt>" --edit "assets/persona/三師爸人物形象照.png" --size 1536x1024 --quality low --name cover --outdir "output/<標題> [Claude] (Short)/"`
+- **Claude Code**：`python skills/cover-image/draw.py "<prompt>" --edit "assets/persona/人物形象照.png" --size 1536x1024 --quality low --name cover --outdir "output/<標題> [Claude] (Short)/"`
 - **Codex**：用內建 Image2，不呼叫 draw.py
 
 ### Step 10：寫 metadata（短片版本）
@@ -211,7 +209,7 @@ python skills/short-video-workflow/scripts/make_vertical.py \
 - [ ] 開頭 5 秒內出現 hook 字幕
 - [ ] 7 個檔案齊全（含 `_直式9x16.mp4`）
 - [ ] 直式版解析度 1080×1920（make_vertical.py 會自動驗證）
-- [ ] cover.png 主色對應 AI 主角（橘 / 藍）
+- [ ] cover.png 強調色對應系列（萊姆綠／金色／亮橘），只用一個強調色
 - [ ] metadata.md 含 `#Shorts` 標籤
 - [ ] HANDOFF.md 已更新本支短片狀態
 

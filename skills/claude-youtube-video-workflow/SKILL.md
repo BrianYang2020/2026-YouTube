@@ -27,17 +27,17 @@ description: Claude Code 專用的 2026Youtube 總控工作流 Skill。當使用
 
 - `HANDOFF.md`
 - `CLAUDE.md`
-- `assets/style/reference-thumbnails.png`
-- `assets/style/cover-style.md`
-- `assets/persona/三師爸人物形象照.png`
+- `assets/style/cover-style.md`（唯一風格基準）
+- `assets/style/reference-thumbnails.png`（若存在；目前還沒有）
+- `assets/persona/人物形象照.png`
 
 ## Claude Code 專用規則
 
 - 封面使用 `skills/cover-image/draw.py` 或 Claude 全域 `~/.claude/skills/draw/draw.py`。
 - 需要 OpenAI API Key：`OPENAI_API_KEY` 或 `~/.openai.env`。
-- 產封面必帶 `--edit assets/persona/三師爸人物形象照.png`。
+- 產封面必帶 `--edit assets/persona/人物形象照.png`。
 - 每次封面都必須重新使用人物基準照，不得從上一張封面或衍生圖延續人物。
-- Claude 版代表色是橘色：`#FF8C42`、`#FFA500`、`#FF6B35`。
+- 封面強調色依系列決定（AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`），**不再依 AI 工具分橘／藍**。
 - Claude 輸出資料夾固定加 `[Claude]` 後綴。
 
 ## 流程
@@ -87,32 +87,14 @@ description: Claude Code 專用的 2026Youtube 總控工作流 Skill。當使用
 
 6. **產封面**
    - **生封面前 SOP（缺一不可、每次都要做）**：
-     a. `Read assets/style/reference-thumbnails.png`（看頻道既有 12 張封面）
-     b. `Read assets/style/cover-style.md`（讀完整風格指南）
-     c. `Read assets/persona/三師爸人物形象照.png`（每次重新讀人物基準照；不可沿用舊封面）
-     d. 依影片主角決定主色：Claude=橘 / Codex=藍 / 兩者並用=橘+藍
-   - Claude 版主色固定：`#FF8C42`、`#FFA500`、`#FF6B35`
-   - **Prompt 範本**（已實測有效，依影片內容微調）：
-     ```
-     YouTube 封面 16:9，三師爸頻道科技教學風格。本支影片主角為 {AI_NAME}，採用{COLOR}主題配色。
-
-     背景：深海軍藍 (#0A1628) 漸層底，左下與右上有 {THEME_LIGHT_COLOR} 放射光線與粒子特效，細微網格紋理，整體科技未來感、強烈呼喚點擊感。
-
-     人物：畫面右側放置這位男性教師（戴眼鏡、黑色連帽外套），姿勢為{POSE}，臉部表情自信微笑，看向鏡頭。{COLOR} rim light 打在邊緣輪廓。人物樣貌、五官、髮型、外套、眼鏡全部延續輸入的人物基準照，不要更動。
-
-     主視覺（左側中下方）：{TOPIC_VISUAL}。電腦周圍有發光暈。
-
-     文字（左半邊）：
-     - 集數標籤（左上）：『{SERIES_LABEL}』白色細字
-     - 主標題（左中央）：『{TITLE_LINE_1}\\n{TITLE_LINE_2}』兩行排列，亮黃色 (#FFD700) 超粗黑體中文字，粗黑色描邊 5px，佔畫面寬度約 45%
-     - 副標題（主標下方）：『{SUBTITLE}』白色細字，搭配兩側裝飾橫線
-
-     整體：高對比、教學頻道氣口、適合教師受眾。
-     不要：純白底、自然風景、寫實生活感、3D 浮雕字。
-     ```
-   - 標準呼叫：
+     a. `Read assets/style/cover-style.md`（唯一風格基準：三系列配色、構圖、表情對照、prompt 範本）
+     b. 若 `assets/style/reference-thumbnails.png` 存在才 Read（目前還沒有）
+     c. 判斷系列（AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`），依「觀眾得到的結果」分，不是依工具分
+     d. 依標題情緒從 `cover-style.md` 第五節選人物照片，`Read` 該照片（每次重新讀；不可沿用舊封面）
+   - **Prompt**：直接用 `cover-style.md` 第六節範本填空；主標兩行、每行 ≤6 字，第二行是結果數字。
+   - 標準呼叫（`--edit` 換成上一步選定的照片）：
      ```powershell
-     python skills\cover-image\draw.py "<prompt>" --edit "assets\persona\三師爸人物形象照.png" --size 1536x1024 --quality low --name cover --outdir "output\<標題> [Claude]"
+     python skills\cover-image\draw.py "<prompt>" --edit "assets\persona\人物形象照.png" --size 1536x1024 --quality low --name cover --outdir "output\<標題> [Claude]"
      ```
    - 跑完整理：刪掉時間戳檔名版本，留 `cover.png` 一份；用 Read 工具看一眼封面確認人物樣貌正確。
 
@@ -139,7 +121,7 @@ description: Claude Code 專用的 2026Youtube 總控工作流 Skill。當使用
      - [ ] 資料夾內 5 個檔案齊全
      - [ ] 影片檔名等於 YouTube 標題（不含後綴）
      - [ ] cover.png 可開啟、人物樣貌延續基準照（用 Read 看一眼）
-     - [ ] cover.png 主色為橘色（不是藍色）
+     - [ ] cover.png 只用一個強調色、且與系列對應；主標無錯字無多餘標點；人物沒有長出眼鏡
      - [ ] metadata.md 含「全部一次貼」整合版標籤段
      - [ ] HANDOFF.md 已更新本支影片狀態
    - **PowerShell 提醒**：路徑含 `[Claude]` 時 PowerShell 會把中括號當 wildcard，用 `-LiteralPath` 或加單引號。Bash 沒這問題。
@@ -173,10 +155,10 @@ description: Claude Code 專用的 2026Youtube 總控工作流 Skill。當使用
 5. **短片標題（🛑 STOP 3）**：出 3 個更短更聳動的候選等使用者選。
 6. **短片 metadata**：同樣 **Read `references/marketing-spec.md`**，套用其中「C. 短片差異」覆寫（標題 3 個、描述 ≤150 字、`#Shorts` 必備、標籤結尾加 `Shorts,短影片`）。
 
-規格：16:9 剪輯、≤120s、主色 Claude 橘、輸出 `output/<短片標題> [Claude] (Short)/`，封面/人物基準照沿用同一份。
+規格：16:9 剪輯、≤120s、封面強調色依系列、輸出 `output/<短片標題> [Claude] (Short)/`，封面/人物基準照沿用同一份。
 **每支短片必加產 9:16 直式版**（YouTube Shorts 發布用）：燒字幕後跑 `make_vertical.py`（模糊背景填充、內容不裁切、1080×1920），輸出檔名 `<短片標題>_直式9x16.mp4`，短片資料夾共 7 檔。
 
-## 範例：本專案第一支影片的成果參數
+## 範例：原作者第一支影片的成果參數（封面風格已不適用，僅供剪輯參數參考）
 讓你知道實測 OK 的參數長相：
 - 影片：`你還在手動填課程計畫嗎 AI Agent 教師工作流實演`
 - 原長 14:00 → smart-cut（threshold 0.06、margin "0sec,0.1sec"）→ 1:42（剪 88%）

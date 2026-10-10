@@ -27,16 +27,16 @@ description: Codex 專用的 2026Youtube 總控工作流 Skill。當使用者要
 
 - `HANDOFF.md`
 - `AGENTS.md`
-- `assets/style/reference-thumbnails.png`
-- `assets/style/cover-style.md`
-- `assets/persona/三師爸人物形象照.png`
+- `assets/style/cover-style.md`（唯一風格基準）
+- `assets/style/reference-thumbnails.png`（若存在；目前還沒有）
+- `assets/persona/人物形象照.png`
 
 ## Codex 專用規則
 
 - 封面使用 Codex 內建 Image2 生圖，不需要 OpenAI API Key。
 - 不要呼叫 `skills/cover-image/draw.py`；那是 Claude Code / API 路線。
-- 每次封面都必須重新參考 `assets/persona/三師爸人物形象照.png`，不得從上一張封面或衍生圖延續人物。
-- Codex 版代表色是亮藍 / 電子青：`#00D4FF`、`#0099FF`，可少量用紫光 `#9D4EDD`。
+- 每次封面都必須重新參考 `assets/persona/人物形象照.png`，不得從上一張封面或衍生圖延續人物。
+- 封面強調色依系列決定，與 Claude 版共用同一套（見 `assets/style/cover-style.md`）；Codex 與 Claude 的差異只在生圖工具與 `[Codex]` 後綴。
 - Codex 輸出資料夾固定加 `[Codex]` 後綴。
 - 若內建 Image2 不能實際傳 reference image，只能用 prompt 約束人物特徵；若人物不像本人，明確回報限制並重生或改用支援圖片參考的流程。
 
@@ -75,11 +75,11 @@ description: Codex 專用的 2026Youtube 總控工作流 Skill。當使用者要
    - 檔案本身不要加 `[Codex]`。
 
 6. **產封面**
-   - 重新讀人物基準照與風格指南，不沿用舊封面。
-   - Prompt 必含：
-     - 人物特徵：短黑髮帶少量灰白、黑框矩形眼鏡、黑色長版防風連帽外套、黑色上衣、自然微笑、教師氣質。
-     - Codex 主色：亮藍 / 電子青，不要 Claude 橘色主光。
-     - 科技教學風格：深海軍藍背景、資料流、電路、AI Agent、課程計畫表格。
+   - 重新讀人物照片與 `assets/style/cover-style.md`，不沿用舊封面。
+   - Prompt 直接用 `cover-style.md` 第六節範本填空，必含：
+     - 人物特徵：亞洲男性、短黑髮旁分、**無眼鏡**、深藍色 polo 衫肩線白色條紋；表情依第五節對照。
+     - 系列強調色：AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`（依觀眾得到的結果分，不是依工具分）。
+     - 炭黑底 `#14161A`、左上系列標籤、左下兩行主標（第二行是結果數字），不要放射光、粒子、網格。
    - 將內建 Image2 產出的最新圖片複製到輸出資料夾，命名 `cover.png`。
 
 7. **寫 metadata（依行銷規格）**

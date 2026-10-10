@@ -1,6 +1,6 @@
 # 2026Youtube — YouTube 影片自動化工作流
 
-> **本 repo 為 `BrianYang2020/2026-YouTube`**，fork 自 `mathruffian-dot/2026-YouTube`。API key 與 HANDOFF 已個人化；**人物照與頻道封面風格尚未個人化**，目前 `三師爸` 相關引用仍是原作者的範例（進度見 `HANDOFF.md`）。
+> **本 repo 為 `BrianYang2020/2026-YouTube`**，fork 自 `mathruffian-dot/2026-YouTube`。API key 與 HANDOFF 已個人化；人物照與頻道封面風格已個人化（**字幕詞彙表尚未**）（進度見 `HANDOFF.md`）。
 > 原作者的完整交班紀錄與實戰經驗：`docs/reference/upstream-handoff-mathruffian.md`。
 
 ## 專案簡介
@@ -46,7 +46,10 @@
 ├── projects/           # 一支影片開一個子資料夾，便於管理
 ├── assets/             # 跨影片共用素材
 │   └── persona/        # 人物形象基準照（封面強制使用）
-│       └── 三師爸人物形象照.png
+│       ├── 人物形象照.png      # 基準照（#04 微笑）
+│       ├── expressions/        # 表情變化
+│       ├── poses/              # 全身姿勢
+│       └── scenes/             # 場景照
 └── skills/             # 共用 Skill（Claude / Codex 皆可讀取）
     ├── smart-cut/      # 智能剪口播（auto-editor）
     ├── audio-to-srt/   # 語音轉字幕（Groq Whisper-large-v3-turbo）
@@ -58,24 +61,27 @@
 ## 封面規範（兩條線必讀）
 
 ### 0. 【最優先】頻道封面慣例
-> ⚠️ 以下慣例是原作者頻道的風格，**待個人化**。原作者另有本機 `yt-pack` 封面庫（`G:\` 雲端硬碟），本 repo 沒有，**不要去找**。
 - 若使用者已提供某集的現成封面，就**直接沿用**（複製成 `output/<標題>/cover.png`），沒有才自己生。
-- 生封面時以下列慣例為第一優先：**純黑底＋三師爸真人去背照（右側）＋左側超大粗體主標＋左上系列標籤＋右上 FREE/徽章＋右下標籤帶＋手捧發光終端機/產品 mockup**；強調色依主題（**Claude=橘/黃、Codex=藍、OpenCode/多模型=綠 CLI 風**），維持「黑底＋單一強調色」。
-- 完整慣例見 `assets/style/yt-pack-cover-convention.md`。舊的 `cover-style.md`（深藍＋橘粒子）已被取代，只當色票參考。
+- 唯一風格基準：`assets/style/cover-style.md`。重點：**炭黑底 `#14161A`＋左上系列標籤＋左下兩行主標（白字「做什麼」＋強調色「結果數字」）＋右側人物配系列色輪廓光**，一張只用一個強調色。
+- **三系列強調色**（依觀眾得到的結果分，不是依工具分）：**AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`**。
+- 原作者的舊風格（yt-pack、FREE 徽章、Claude=橘／Codex=藍）已移到 `docs/reference/`，**不要參考**；原作者另有本機 `yt-pack` 封面庫（`G:\`），本 repo 沒有，不要去找。
 
 ### 1. 人物基準照
-**所有 YouTube 封面必須使用 `assets/persona/三師爸人物形象照.png` 作為人物基準。**
-呼叫 `cover-image` Skill 時帶 `--edit assets/persona/三師爸人物形象照.png` 參數。
-gpt-image-2 在 edit 模式下會延續人物的臉、髮型、體型、穿著（黑色連帽外套、眼鏡）。
+**所有 YouTube 封面必須使用 `assets/persona/人物形象照.png` 作為人物基準。**
+呼叫 `cover-image` Skill 時帶 `--edit assets/persona/人物形象照.png` 參數。
+gpt-image-2 在 edit 模式下會延續人物的臉、髮型、體型、穿著（**深藍色 polo 衫、肩線白條紋、短黑髮、無眼鏡**）。
 **每一次封面都必須重新讀取並使用這張人物基準照；不得從上一張已生成封面或任何衍生圖片延續人物。**
+- **表情依主題換**：基準照是微笑；主題適合別的情緒時，改用 `assets/persona/expressions/` 內的照片當 `--edit` 輸入（例如「算錯了／踩雷」用 `驚訝.png`、「小技巧」用 `眨眼.png`、「痛點」用 `瞇眼皺眉.png`）。
+- 全身姿勢在 `poses/`、場景照在 `scenes/`，需要時才用。
+- `assets/persona/` 內所有照片**皆不進 git**（repo 是公開的，見 `.gitignore`）。
 
 ### 2. 視覺風格指南
 **生封面前的 SOP（缺一不可）：**
-1. `Read assets/style/reference-thumbnails.png` — 用 Read 工具看頻道既有 12 張封面參考圖
-2. `Read assets/style/cover-style.md` — 讀完整風格指南（色票、構圖、主題配色規則、prompt 範本）
-3. `Read assets/persona/三師爸人物形象照.png` — 每次重新讀人物基準照，不可沿用舊封面
-4. 依影片主角決定主色：**Claude=橘 / Codex=藍 / 兩者並用=橘+藍**
-5. 撰寫 prompt 後再呼叫 `cover-image` Skill
+1. `Read assets/style/cover-style.md` — 讀完整風格指南（三系列配色、構圖、表情對照、prompt 範本）
+2. 若 `assets/style/reference-thumbnails.png` 存在才 Read（目前還沒有，等累積 9–12 張自己的封面再建）
+3. 判斷系列 → 決定強調色；判斷標題情緒 → 從表情對照選人物照片
+4. `Read` 選定的人物照片 — 每次重新讀，不可沿用舊封面
+5. 依範本撰寫 prompt → 呼叫 `cover-image` Skill → 生完 Read 檢查錯字、多餘標點、是否長出眼鏡
 
 > 規則衝突時的優先序：人物基準照 > 風格指南 > 個別影片 prompt 變化
 
@@ -118,7 +124,7 @@ gpt-image-2 在 edit 模式下會延續人物的臉、髮型、體型、穿著�
 7. **使用者選定標題後**：
    - 把標題清洗成合法資料夾名 → 建 `output/<標題> [Claude]/`（你是 Claude Code，必加 `[Claude]` 後綴）
    - **平行**產出：
-     - 觸發 `cover-image` Skill 生封面（**必帶 `--edit assets/persona/三師爸人物形象照.png`**，用標題當素材）→ `output/<標題>/cover.png`
+     - 觸發 `cover-image` Skill 生封面（**必帶 `--edit assets/persona/人物形象照.png`**，用標題當素材）→ `output/<標題>/cover.png`
        > Codex 端不走此路，改用 Codex 內建 image 2 工具直接產出（細節見 `AGENTS.md`）
      - AI 寫 YouTube 影片描述 → 寫進 `metadata.md`
      - AI 寫社群貼文（FB / IG / Threads 各一）→ 寫進 `metadata.md`
@@ -150,3 +156,4 @@ gpt-image-2 在 edit 模式下會延續人物的臉、髮型、體型、穿著�
 |------|----------|
 | 2026-05-10 | （原作者）專案初始化、建立雙 AI 接力框架、複製兩個 Skill |
 | 2026-10-10 | fork 至 BrianYang2020，移到本機路徑；HANDOFF 重置、原交班紀錄移到 `docs/reference/`；移除 Google Drive／Obsidian／yt-pack 引用 |
+| 2026-10-10 | 人物照個人化（基準照＋表情／姿勢／場景，照片不進 git）；頻道封面風格重寫為「炭黑底＋三系列強調色」，原作者風格檔移到 `docs/reference/` |

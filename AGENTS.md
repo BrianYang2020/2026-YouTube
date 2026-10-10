@@ -2,7 +2,7 @@
 
 > 這份檔案是 **OpenAI Codex** 在本專案的入口。Claude Code 讀的是 `CLAUDE.md`，內容與本檔對齊。
 >
-> **本 repo 為 `BrianYang2020/2026-YouTube`**，fork 自 `mathruffian-dot/2026-YouTube`。API key 與 HANDOFF 已個人化；**人物照與頻道封面風格尚未個人化**（進度見 `HANDOFF.md`）。
+> **本 repo 為 `BrianYang2020/2026-YouTube`**，fork 自 `mathruffian-dot/2026-YouTube`。API key、HANDOFF、人物照、頻道封面風格已個人化（**字幕詞彙表尚未**）（進度見 `HANDOFF.md`）。
 > 原作者的完整交班紀錄與實戰經驗：`docs/reference/upstream-handoff-mathruffian.md`。
 
 ## 你是誰
@@ -40,10 +40,11 @@ Codex 總控 Skill 另有備份副本：`skills-backup/codex-youtube-video-workf
 ### 封面生成（Codex 專用方式）
 你內建 image 2 生圖功能，**直接用內建工具產封面**，不需要 OpenAI API Key、不要跑 draw.py。
 但風格規範與人物基準照仍須遵守：
-- 把 `assets/persona/三師爸人物形象照.png` 當作人物基準傳給內建工具（如果內建工具支援 reference image）
-- **每一次封面都必須重新參考 `assets/persona/三師爸人物形象照.png`；不得從上一張已生成封面或任何衍生圖片延續人物。**
-- prompt 依 `assets/style/cover-style.md` 風格指南撰寫
-- 主色依影片主角決定（Claude=橘 / Codex=藍 / 兩者並用=橘+藍）
+- 把 `assets/persona/人物形象照.png` 當作人物基準傳給內建工具（如果內建工具支援 reference image）
+- **每一次封面都必須重新參考 `assets/persona/人物形象照.png`；不得從上一張已生成封面或任何衍生圖片延續人物。**
+- prompt 依 `assets/style/cover-style.md` 風格指南撰寫（第六節有範本）
+- 強調色依系列決定（依觀眾得到的結果分，不是依工具分）：AI 自動化＝萊姆綠 `#C6FF3D`／AI × 金融＝金色 `#F5B700`／AI 辦公＝亮橘 `#FF8A3D`
+- 表情依標題情緒，從 `cover-style.md` 第五節選 `assets/persona/` 內對應照片
 - 輸出存到 `output/<標題>/cover.png`
 
 ## ChatGPT App 後續剪輯入口
@@ -59,10 +60,10 @@ Codex 總控 Skill 另有備份副本：`skills-backup/codex-youtube-video-workf
 6. 使用者挑完 → 把標題清洗成合法資料夾名（去除 `？！：／＼?!:/\\<>|"*`）→ 建 `output/<標題> [Codex]/`（你是 Codex，必加 `[Codex]` 後綴；資料夾內檔案不加後綴）
 7. 平行：
    - **封面 SOP**（缺一不可）：
-     a. `Read assets/style/reference-thumbnails.png`（看頻道既有封面）
-     b. `Read assets/style/cover-style.md`（讀完整風格指南）
-     c. `Read assets/persona/三師爸人物形象照.png`（每次重新讀人物基準照；不可沿用舊封面）
-     d. 依影片主角決定主色：Claude=橘 / Codex=藍 / 兩者並用=橘+藍
+     a. `Read assets/style/cover-style.md`（唯一風格基準）；若 `assets/style/reference-thumbnails.png` 存在才 Read（目前還沒有）
+     b. 判斷系列 → 強調色（AI 自動化＝萊姆綠／AI × 金融＝金色／AI 辦公＝亮橘）
+     c. 依標題情緒選人物照片並 Read（每次重新讀；不可沿用舊封面）
+     d. 主標兩行、每行 ≤6 字，第二行是結果數字
      e. 撰寫 prompt → **用你內建的 image 2 生圖工具**產封面（人物基準照當 reference image），存到 `output/<標題> [Codex]/cover.png`
    - AI 寫 metadata.md（描述 / 社群 / SEO，**SEO 區塊必含「YouTube 標籤欄位（直接複製）」逗號分隔版**）
 8. 把 .cut.mp4、.srt、.txt、封面、metadata 全搬進 `output/<標題> [Codex]/`，影片改名為 `<標題>.mp4`
